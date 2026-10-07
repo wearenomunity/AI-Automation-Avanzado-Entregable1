@@ -1,0 +1,30 @@
+NOTA PARA LA CORRECCIÓN: desvío declarado en el modelo de lenguaje
+
+Requisito de la consigna:
+El AI Agent debe estar conectado a un modelo mediante su nodo nativo
+(OpenAI Chat Model o Anthropic Chat Model).
+
+Estado: NO cumplido tal como está escrito.
+El flujo usa el nodo nativo "DeepSeek Chat Model" (modelo deepseek-v4-pro).
+
+Motivo: costo. Es un proyecto personal en etapa de prueba. Cada ejecución
+consume cerca de 10.000 tokens, porque el agente lee la base de
+conocimiento completa antes de responder.
+
+Alcance del desvío: afecta solo al nodo del modelo. Reemplazarlo por
+OpenAI Chat Model o Anthropic Chat Model es un cambio de un nodo y no
+modifica el resto del flujo.
+
+Resto de los requisitos, con el nodo donde se verifica cada uno:
+- Trigger: "When chat message received" (Chat Trigger).
+- AI Agent en modo Tools Agent: nodo "AI Agent".
+- Límite de iteraciones: Max Iterations = 6, en las opciones del AI Agent.
+- System Prompt modular: secciones Rol, Ámbito, Objetivo, Reglas,
+  Escalamiento y Límites (lo que no tiene permitido), en el System Message.
+- Herramientas conectadas de forma lateral: "buscar_respuestas" y
+  "buscar_datos" (Google Sheets Tool), en el puerto Tool del agente.
+- Description de las herramientas: escrita a mano en ambas, con los casos
+  en que el agente debe usarlas.
+- Observabilidad: nodo final de Gmail "Send a message", que envía el
+  reporte con la clasificación, la respuesta propuesta y las herramientas
+  ejecutadas.
